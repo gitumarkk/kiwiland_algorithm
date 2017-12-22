@@ -66,76 +66,47 @@ class Graph(object):
 		return self.get_route_distance(route[1:], total_distance)
 
 
-   # def find_all_paths(graph, start, end, path=[]):
-   #      path = path + [start]
-   #      if start == end:
-   #          return [path]
-   #      if not graph.has_key(start):
-   #          return []
-   #      paths = []
-   #      for node in graph[start]:
-   #          if node not in path:
-   #              newpaths = find_all_paths(graph, node, end, path)
-   #              for newpath in newpaths:
-   #                  paths.append(newpath)
-   #      return paths
-
-	# def get_route_combinations(self, start, stop, path=[], visited=[]):
-	# 	path = path + [start]
-	# 	graph = self.graph_slim
-	# 	print "start: %s\nstop: %s\ngraph: %s\npath: %s\n" % (start, stop, graph[start], path)
-
-	# 	print len(path)
-	# 	if start == stop:
-	# 		return [path]
-
-	# 	if not graph.has_key(start):
-	# 		return []
-
-	# 	paths = []
-	# 	visited.append(start)
-	# 	for route_next in graph[start]:
-	# 		if route_next not in path:
-	# 			new_paths = self.get_route_combinations(route_next, stop, path, visited)
-	# 			for new_path in new_paths:
-	# 				paths.append(new_path)
-	# 	return paths
-
-
 	def get_route_combinations(self, start, stop, route="", current_depth=0, max_depth=None):
-		# route.append(start)
+		"""
+
+		"""
 		route += start
 		graph = self.graph
-		if max_depth == None:
-			max_depth = 5 # Prevent infinite recursion, otherwise keep going
-		# print "start: %s\nstop: %s\ngraph: %s\nroute: %s\n" % (start, stop, graph[start], route)
-		print route, self.visited, max_depth, current_depth
+
 		if current_depth > max_depth:
 			return
 
-		if start == stop and (len(route) > 1):
+		elif start == stop and (len(route) > 1):
 			self.visited.append(route)
-			# route = route[0:len(route)-1]
-			return
-		else:
-			for new_start in graph[start].keys():
-				self.get_route_combinations(new_start, stop, route=route, current_depth=current_depth + 1, max_depth=max_depth)
+
+			if len(route) >= max_depth:
+				return
+
+		for new_start in graph[start].keys():
+			self.get_route_combinations(new_start, stop, route=route, current_depth=current_depth + 1, max_depth=max_depth)
+
 
 	def get_trip_info(self, start, stop, key=None, value=None):
+		"""
+
+		"""
 		self.visited = []
 
 		if key == 'max_stops':
-			self.get_route_combinations(start, stop)
-			return len([route for route in self.visited if (len(route) - 1) <= value])
+			self.get_route_combinations(start, stop, max_depth=3)
+			return len(set(self.visited))
 
 		elif key == 'exact_stops':
-			self.get_route_combinations(start, stop)
-			return self.visited
+			self.get_route_combinations(start, stop, max_depth=5)
+			return len(filter(lambda route: len(route) == value + 1, set(self.visited)))
 
 		elif key == 'shortest_route':
-			self.get_route_combinations(start, stop)
-			print self.visited
-			return min([self.get_route_distance(route) for route in self.visited])
+			self.get_route_combinations(start, stop, max_depth=len(self.graph.keys()))
+			return min([self.get_route_distance(route) for route in set(self.visited)])
+
+		elif key == 'max_distance':
+			self.get_route_combinations(start, stop, max_depth=len(self.graph.keys()) + 4)
+			return len([route for route in set(self.visited) if self.get_route_distance(route) < 30])
 
 
 
