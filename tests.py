@@ -68,6 +68,21 @@ class TestGraph(unittest.TestCase):
 				item['expected']
 			)
 
+	def test_get_general_trip(self):
+		input_list = [
+			{ "start": "C", "stop": "C", "key": "max_stops", "value": 3, "expected": 2 },
+			# { "start": "A", "stop": "C", "key": "exact_stops", "value": 4, "expected": 3 },
+			{ "start": "A", "stop": "C", "key": "shortest_route", "value": None, "expected": 9 },
+			{ "start": "B", "stop": "B", "key": "shortest_route", "value": None, "expected": 9 },
+			# { "start": "", "stop": "", "key": "", "value": "", "expected": "" },
+		]
+
+		for item in input_list:
+			self.assertEqual(
+				self.graph_obj.get_trip_info(item['start'], item['stop'], key=item['key'], value=item['value']),
+				item['expected']
+			)
+
 
 if __name__ == '__main__':
 	unittest.main()
