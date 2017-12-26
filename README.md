@@ -1,4 +1,16 @@
-PROBLEM -TRAINS:
+# KIWILAND TRAIN ALGORITHM
+
+The repository contains the solution to the kiwiland train traversal problem statement given below.
+
+# DEPENDENCIES
+There are no hard dependencies other than having a local version of python running
+
+## DEV DEPENDENCIES
+However, the soft dependencies are defined in `requirements.txt` and include:
+* pycodestyle which is used for pep8 linting.
+* 
+
+# PROBLEM STATEMENT - TRAINS:
 
 Problem:  The local commuter railroad services a number of towns in Kiwiland.  Because of monetary concerns, all of the tracks are 'one-way.' That is, a route from Kaitaia to Invercargill does not imply the existence of a route from Invercargill to Kaitaia.  In fact, even if both of these routes do happen to exist, they are distinct and are not necessarily the same distance!
 
@@ -34,3 +46,14 @@ Test Input:
 For the test input, the towns are named using the first few letters of the alphabet from A to D.  A route between two towns (A to B) with a distance of 5 is represented as AB5.
 
 Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7
+
+Output #1: 9
+Output #2: 5
+Output #3: 13
+Output #4: 22
+Output #5: NO SUCH ROUTE
+Output #6: 2
+Output #7: 3
+Output #8: 9
+Output #9: 9
+Output #10: 7
