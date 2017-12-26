@@ -8,7 +8,6 @@ There are no hard dependencies other than having a local version of python runni
 ## DEV DEPENDENCIES
 However, the soft dependencies are defined in `requirements.txt` and include:
 * pycodestyle which is used for pep8 linting.
-* 
 
 # PROBLEM STATEMENT - TRAINS:
 
@@ -40,20 +39,3 @@ to B.
 10. The number of different routes from C to C with a distance of less than 30.
 In the sample data, the trips are: CDC, CEBC, CEBCDC, CDCEBC, CDEBC,
 CEBCEBC, CEBCEBCEBC.
-
-Test Input:
-
-For the test input, the towns are named using the first few letters of the alphabet from A to D.  A route between two towns (A to B) with a distance of 5 is represented as AB5.
-
-Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7
-
-Output #1: 9
-Output #2: 5
-Output #3: 13
-Output #4: 22
-Output #5: NO SUCH ROUTE
-Output #6: 2
-Output #7: 3
-Output #8: 9
-Output #9: 9
-Output #10: 7
