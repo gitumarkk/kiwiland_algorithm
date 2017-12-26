@@ -3,15 +3,20 @@ from copy import copy
 
 
 class Graph(object):
-    def __init__(self):
+    def __init__(self, data_file='data/train_route.txt'):
         """Initializes the object by getting the input data and
             generating the graph
 
+        Args:
+            data_file (str): The file path to be opened.
+                Assumes the content of the file is in the format;
+                Graph: AB5, BC4, CD8, DC8
+
         """
-        processed_data = self.get_input_data()
+        processed_data = self.get_input_data(data_file)
         self.graph = self.generate_graph(processed_data)
 
-    def get_input_data(self, data_file='data/train_route.txt'):
+    def get_input_data(self, data_file):
         """Open's a file provided in the key word and reads the data from it
 
         Args:
@@ -126,7 +131,8 @@ class Graph(object):
                 to prevent an infinite loop if path doesn't exist
 
         Returns:
-            None: If current_depth exceeds max depth due to no route existing or value passed in by user
+            None: If current_depth exceeds max depth due to no route existing or max_depth
+                value passed in by user
 
         Example:
             >> self.get_route_combination('A', 'B', route='', current_depth=0, max_depth=4)
@@ -175,11 +181,11 @@ class Graph(object):
         self.visited = []
 
         if key == 'max_stops':
-            self.get_route_combinations(start, stop, max_depth=3)
+            self.get_route_combinations(start, stop, max_depth=value)
             return len(set(self.visited))
 
         elif key == 'exact_stops':
-            self.get_route_combinations(start, stop, max_depth=5)
+            self.get_route_combinations(start, stop, max_depth=value + 1)
             return len(filter(lambda route: len(route) == value + 1, set(self.visited)))
 
         elif key == 'shortest_route':
@@ -189,7 +195,4 @@ class Graph(object):
         elif key == 'max_distance':
             self.get_route_combinations(start, stop, max_depth=len(self.graph.keys()) + 4)
             return len([route for route in set(self.visited) if self.get_route_distance(route) < 30])
-
-
-
 

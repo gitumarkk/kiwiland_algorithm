@@ -11,7 +11,7 @@ class TestGraph(unittest.TestCase):
 
     def test_get_input_file_should_success(self):
         self.assertEqual(
-            self.graph_obj.get_input_data(),
+            self.graph_obj.get_input_data('data/train_route.txt'),
             "AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7"
         )
 
