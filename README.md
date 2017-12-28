@@ -24,6 +24,10 @@ For example, in order to test for `max_stops=3`, the following function call nee
 #### `get_route_combinations(self, start, stop, route="", current_depth=0, max_depth=None)`
 The function is recursive and depends on the initial defaults to arrive at specific end cases. It modifies a global `self.visited` array with the possible route combinations where the recursion is terminated when the a maximum number of recursions have been made as specified in the function run. 
 
+
+## CUSTOM TESTING
+In order to run a simulation of the functions, the `def run_graph_to_check_distance` and the  `def run_graph_for_start_to_stop_path` methods have been provided which take in custom arguments. The arguments can be modified in the `__name__ == "__main__"` section. A sample of the expected input data has been provided for testing.
+
 ## PROBLEM STATEMENT - TRAINS:
 
 Problem:  The local commuter railroad services a number of towns in Kiwiland.  Because of monetary concerns, all of the tracks are 'one-way.' That is, a route from Kaitaia to Invercargill does not imply the existence of a route from Invercargill to Kaitaia.  In fact, even if both of these routes do happen to exist, they are distinct and are not necessarily the same distance!

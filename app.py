@@ -3,7 +3,7 @@ from copy import copy
 
 
 class Graph(object):
-    def __init__(self, data_file='data/train_route.txt'):
+    def __init__(self, data_file='data/train_route.txt', data_string=None):
         """Initializes the object by getting the input data and
             generating the graph
 
@@ -11,10 +11,27 @@ class Graph(object):
             data_file (str): The file path to be opened.
                 Assumes the content of the file is in the format;
                 Graph: AB5, BC4, CD8, DC8
+            data_string
 
         """
-        processed_data = self.get_input_data(data_file)
+        if data_string:
+            processed_data = self.parse_input_data(data_string)
+        else:
+            processed_data = self.get_input_data(data_file)
+
         self.graph = self.generate_graph(processed_data)
+
+    def parse_input_data(self, content):
+        """Get's an input string of the graph and produces a string for further formatting
+
+        Args:
+            content (str): The content to read in the format 'Graph: AB5, BC4, CD8, DC8'
+
+        Returns:
+            str: Of the preprocessed input data in the form of 'B5, BC4, CD8, DC8'
+
+        """
+        return content.split(":")[-1].strip()
 
     def get_input_data(self, data_file):
         """Open's a file provided in the key word and reads the data from it
@@ -25,12 +42,12 @@ class Graph(object):
                 Graph: AB5, BC4, CD8, DC8
 
         Returns:
-            str: The processed string from the fil
+            str: The processed string from the file
 
         """
         with open(data_file) as input_file:
             content = input_file.read()
-        return content.split(":")[-1].strip()
+        return self.parse_input_data(content)
 
     def process_node_string(self, data_string):
         """Recieves a string and returns the individual characters in the string after validation
@@ -195,4 +212,60 @@ class Graph(object):
         elif key == 'max_distance':
             self.get_route_combinations(start, stop, max_depth=len(self.graph.keys()) + 4)
             return len([route for route in set(self.visited) if self.get_route_distance(route) < 30])
+
+
+def run_graph_to_check_distance(data_string=None, list_to_test=[]):
+    """This is a helper function to provide the distance for traversing a route
+
+        Args:
+            data_string (str?): If provided builds the graph based on the initial data_string
+            list_to_test (list): Should contain the graph to test in the format
+                {"route": ""}
+    """
+
+    graph_obj = Graph(data_string=data_string)
+
+    for item in list_to_test:
+        result = graph_obj.get_route_distance(item['route'])
+        print("For the route {route}, the distance is: {result} ".format(route=item['route'], result=result))
+
+
+def run_graph_for_start_to_stop_path(data_string=None, list_to_test=[]):
+    """This is a helper function to provide the result between the start and stop
+        routes based on the specified key and value.
+
+        Args:
+            data_string (str?): If provided builds the graph based on the initial data_string
+            list_to_test (list): Should contain the graph to test in the format
+                {"start": "", "stop": "", "key": "", "value": ""}
+    """
+    graph_obj = Graph(data_string=data_string)
+
+    for item in list_to_test:
+        result = graph_obj.get_trip_info(item['start'], item['stop'], key=item['key'], value=item['value'])
+        print("For the path {start} to {stop}, with {key}={value}, the result is: {result}".
+            format(start=item['start'], stop=item['stop'], key=item['key'],  value=item['value'], result=result))
+
+if __name__ == "__main__":
+    graph_input_string = "Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7"
+
+    print('Calculating the distance along a path')
+    distance_list_to_test = [
+        {"route": "ABC"},
+        {"route": "AD"},
+        {"route": "ADC"},
+        {"route": "AEBCD"},
+        {"route": "AED"}
+    ]
+    run_graph_to_check_distance(data_string=graph_input_string, list_to_test=distance_list_to_test)
+
+    print('\nChecking the result between a start and stop node based on a key criteria')
+    path_list_to_test = [
+        {"start": "C", "stop": "C", "key": "max_stops", "value": 3},
+        {"start": "A", "stop": "C", "key": "exact_stops", "value": 4},
+        {"start": "A", "stop": "C", "key": "shortest_route", "value": None},
+        {"start": "B", "stop": "B", "key": "shortest_route", "value": None,},
+        {"start": "C", "stop": "C", "key": "max_distance", "value": 30},
+    ]
+    run_graph_for_start_to_stop_path(data_string=graph_input_string, list_to_test=path_list_to_test)
 

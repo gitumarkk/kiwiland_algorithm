@@ -54,16 +54,16 @@ class TestGraph(unittest.TestCase):
 
     def test_distance_success(self):
         input_list = [
-            {"input": "ABC", "expected": 9},
-            {"input": "AD", "expected": 5},
-            {"input": "ADC", "expected": 13},
-            {"input": "AEBCD", "expected": 22},
-            {"input": "AED", "expected": 'NO SUCH ROUTE'}
+            {"route": "ABC", "expected": 9},
+            {"route": "AD", "expected": 5},
+            {"route": "ADC", "expected": 13},
+            {"route": "AEBCD", "expected": 22},
+            {"route": "AED", "expected": 'NO SUCH ROUTE'}
         ]
 
         for item in input_list:
             self.assertEqual(
-                self.graph_obj.get_route_distance(item['input']),
+                self.graph_obj.get_route_distance(item['route']),
                 item['expected']
             )
 
