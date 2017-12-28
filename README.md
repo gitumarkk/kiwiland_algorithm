@@ -7,7 +7,7 @@ There are no hard dependencies other than having a local version of python runni
 
 ### DEV DEPENDENCIES
 However, the soft dependencies are defined in `requirements.txt` and include:
-* `pycodestyle` which is used for pep8 linting, in order to focus on best conventions.
+* `pycodestyle` which is used for pep8 linting, in order to focus on best conventions. To check the linting run: `pycodestyle <file>.py`
 
 ## IMPLEMENTATION DETAILS
 The codebase is made up of 2 main files, the `app.py` file which contains the graph algorithm and the `tests.py` file which contains the unittests to test the funcionality. The implemantion of the graph traversal algorithm has a big emphasis on the *DRY* concept i.e. Don't Repeat Yourself, for both the graph implementation and testing. This means there is significant reuse of functions for the general use case, with slight modifications for specific cases. The functions in `app.py` contains python docstrings that highlights the functions implemantation.
@@ -26,7 +26,7 @@ The function is recursive and depends on the initial defaults to arrive at speci
 
 
 ## CUSTOM TESTING
-In order to run a simulation of the functions, the `def run_graph_to_check_distance` and the  `def run_graph_for_start_to_stop_path` methods have been provided which take in custom arguments. The arguments can be modified in the `__name__ == "__main__"` section. A sample of the expected input data has been provided for testing.
+In order to run a simulation of the functions, the `def run_graph_to_check_distance` and the  `def run_graph_for_start_to_stop_path` methods have been provided which take in custom arguments. The arguments can be modified in the `__name__ == "__main__"` section. A sample of the expected input data has been provided in the `app.py` file for testing.
 
 ## PROBLEM STATEMENT - TRAINS:
 

@@ -249,8 +249,9 @@ def run_graph_for_start_to_stop_path(data_string=None, item={}):
 
     result = graph_obj.get_trip_info(item['start'], item['stop'], key=item['key'], value=item['value'])
     print("For the path {start} to {stop}, with {key}={value}, the result is: {result}".
-        format(start=item['start'], stop=item['stop'], key=item['key'],  value=item['value'], result=result))
+        format(start=item['start'], stop=item['stop'], key=item['key'], value=item['value'], result=result))
     return result
+
 
 if __name__ == "__main__":
     graph_input_string = "Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7"
@@ -272,7 +273,7 @@ if __name__ == "__main__":
         {"start": "C", "stop": "C", "key": "max_stops", "value": 3},
         {"start": "A", "stop": "C", "key": "exact_stops", "value": 4},
         {"start": "A", "stop": "C", "key": "shortest_route", "value": None},
-        {"start": "B", "stop": "B", "key": "shortest_route", "value": None,},
+        {"start": "B", "stop": "B", "key": "shortest_route", "value": None},
         {"start": "C", "stop": "C", "key": "max_distance", "value": 30},
     ]
     for item in path_list_to_test:
