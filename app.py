@@ -214,42 +214,48 @@ class Graph(object):
             return len([route for route in set(self.visited) if self.get_route_distance(route) < 30])
 
 
-def run_graph_to_check_distance(data_string=None, list_to_test=[]):
+def run_graph_to_check_distance(data_string=None, item={}):
     """This is a helper function to provide the distance for traversing a route
 
         Args:
             data_string (str?): If provided builds the graph based on the initial data_string
-            list_to_test (list): Should contain the graph to test in the format
+            item (dict): Should contain the input item to test in the format
                 {"route": ""}
+
+        Return:
+            int: Returns the result for the given input item
     """
 
     graph_obj = Graph(data_string=data_string)
 
-    for item in list_to_test:
-        result = graph_obj.get_route_distance(item['route'])
-        print("For the route {route}, the distance is: {result} ".format(route=item['route'], result=result))
+    result = graph_obj.get_route_distance(item['route'])
+    print("For the route {route}, the distance is: {result} ".format(route=item['route'], result=result))
+    return result
 
 
-def run_graph_for_start_to_stop_path(data_string=None, list_to_test=[]):
+def run_graph_for_start_to_stop_path(data_string=None, item={}):
     """This is a helper function to provide the result between the start and stop
         routes based on the specified key and value.
 
         Args:
             data_string (str?): If provided builds the graph based on the initial data_string
-            list_to_test (list): Should contain the graph to test in the format
+            item (dict): Should contain the input item to test in the format
                 {"start": "", "stop": "", "key": "", "value": ""}
+
+        Return:
+            int: Returns the result for the given input item
     """
     graph_obj = Graph(data_string=data_string)
 
-    for item in list_to_test:
-        result = graph_obj.get_trip_info(item['start'], item['stop'], key=item['key'], value=item['value'])
-        print("For the path {start} to {stop}, with {key}={value}, the result is: {result}".
-            format(start=item['start'], stop=item['stop'], key=item['key'],  value=item['value'], result=result))
+    result = graph_obj.get_trip_info(item['start'], item['stop'], key=item['key'], value=item['value'])
+    print("For the path {start} to {stop}, with {key}={value}, the result is: {result}".
+        format(start=item['start'], stop=item['stop'], key=item['key'],  value=item['value'], result=result))
+    return result
 
 if __name__ == "__main__":
     graph_input_string = "Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7"
 
-    print('Calculating the distance along a path')
+    print('Calculating the distance along a path: ')
     distance_list_to_test = [
         {"route": "ABC"},
         {"route": "AD"},
@@ -257,9 +263,11 @@ if __name__ == "__main__":
         {"route": "AEBCD"},
         {"route": "AED"}
     ]
-    run_graph_to_check_distance(data_string=graph_input_string, list_to_test=distance_list_to_test)
 
-    print('\nChecking the result between a start and stop node based on a key criteria')
+    for item in distance_list_to_test:
+        run_graph_to_check_distance(data_string=graph_input_string, item=item)
+
+    print('\nChecking the result between a start and stop node based on a key criteria:')
     path_list_to_test = [
         {"start": "C", "stop": "C", "key": "max_stops", "value": 3},
         {"start": "A", "stop": "C", "key": "exact_stops", "value": 4},
@@ -267,5 +275,6 @@ if __name__ == "__main__":
         {"start": "B", "stop": "B", "key": "shortest_route", "value": None,},
         {"start": "C", "stop": "C", "key": "max_distance", "value": 30},
     ]
-    run_graph_for_start_to_stop_path(data_string=graph_input_string, list_to_test=path_list_to_test)
+    for item in path_list_to_test:
+        run_graph_for_start_to_stop_path(data_string=graph_input_string, item=item)
 
